@@ -8,12 +8,14 @@ export const User = () => {
     const [user, setUser] = useState([]);
     const navigate = useNavigate();
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
 
         const fetchUser = async () => {
           
             try{
-                const response = await axios.get('http://localhost:5000/pacientes')
+                const response = await axios.get(`${API_URL}/pacientes`);
                 console.log(response)
                 setUser(response.data)
             }
