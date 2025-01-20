@@ -11,7 +11,8 @@ app.use(cors());
 // Lista inicial de pacientes (opcional, pode começar vazia)
 let pacientes = [ 
     { id: 0, nome: "João Silva", email: "joao@gmail.com", idade: 32, telefone: "99999-9999" },
-    { id: 1, nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" }
+    { id: 1, nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: 2, nome: "Mario Santos", email: "mario@gmail.com", idade: 48, telefone: "98888-8866" }
 ];
 
 // Endpoint para obter pacientes
