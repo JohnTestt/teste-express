@@ -31,7 +31,7 @@ export const User = () => {
         <>
          <p>Pacientes Cadastrados</p>
          <>
-         <button onClick={() =>navigate('/pacientes/register')}>Adicionar +</button>
+         <button onClick={() =>navigate('/register')}>Adicionar +</button>
          </>
 
          {
