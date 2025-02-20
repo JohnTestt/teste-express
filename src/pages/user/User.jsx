@@ -2,10 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { TableCard } from "../../components/TableCard/TableCard";
 import { useNavigate } from "react-router-dom";
+import { Search } from "../../components/Search/Search";
+
+
+import { StyledTable, TableHeader, ErrorMessage } from "./style/style";
 
 export const User = () => {
 
     const [user, setUser] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    
+    
     const navigate = useNavigate();
 
     const API_URL = import.meta.env.VITE_API_URL;
@@ -16,63 +23,80 @@ export const User = () => {
           
             try{
                 const response = await axios.get(`${API_URL}/pacientes`);
-                console.log(response)
                 setUser(response.data)
+                console.log(response.data)
             }
             catch(error) {
-                console.error('Error ao buscar dados', error);
+                console.error('Error ao buscar dados', error); 
                
             }
         };
       
         fetchUser();
 
-    }, [])
+    }, []);
+
+    //search
+    const handleAllSearch = (event) => {
+      setSearchTerm(event.target.value)
+    };
+
+    const filterUsers = user.filter(patiente => 
+      patiente.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    //remove
+
+    const handleRemoveUser = () => {
+      axios.delete(`${API_URL}/pacientes`)
+
+    };
 
     return (
         <>
          <p>Pacientes Cadastrados</p>
+         <Search
+         placeholder={'Search Paciente...'}
+         value={searchTerm}
+         onChange={handleAllSearch}
+         />
+
          <>
-         <button onClick={() =>navigate('/register')}>Adicionar +</button>
+         <button onClick={() =>navigate('/register')}>Adicionar +</button> 
+
          </>
 
-         {
-            user.length > 0 ? (
-
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ backgroundColor: "#f2f2f2" }}>
-              <th>ID</th>
-              <th >Nome</th>
-              <th>Email</th>
-              <th >Idade</th>
-              <th>Telefone</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-         
-          {user.map((data) => (
-             
-             <TableCard
-              key= {data.id}
-              id= {data.id}
-              nome= {data.nome}
-              email = {data.email}
-              idade= {data.idade}
-              telefone= {data.telefone}
-              />
-            ))}
-          </tbody>
-        </table>
-                    
-            )
-            : (
-                <p>Error ao buscar Dados...</p>
-            )
-         }
-        
-         
+              {
+              user.length > 0 ? (
+                <StyledTable>
+                  <thead>
+                    <tr>
+                      <TableHeader>ID</TableHeader>
+                      <TableHeader>Nome</TableHeader>
+                      <TableHeader>Email</TableHeader>
+                      <TableHeader>Idade</TableHeader>
+                      <TableHeader>Telefone</TableHeader>
+                      <TableHeader>Ações</TableHeader>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filterUsers.map((data) => (
+                      <TableCard
+                        key={data.id}
+                        id={data.id}
+                        nome={data.nome}
+                        email={data.email}
+                        idade={data.idade}
+                        telefone={data.telefone}
+                        onRemove = {()=> handleRemoveUser()}
+                      />
+                    ))}
+                  </tbody>
+                </StyledTable>
+              ) : (
+                <ErrorMessage>Error ao buscar Dados...</ErrorMessage>
+              )}
+              
         
         </>
     )
