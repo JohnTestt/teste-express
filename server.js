@@ -1,18 +1,19 @@
 import express from "express";
 import cors from "cors";
 import {check, validationResult} from "express-validator";
+import {v4 as uuidv4} from 'uuid';
 
 
 const app = express();
 
 app.use(express.json()); 
-app.use(cors());
+app.use(cors()); 
 
 // Lista inicial de pacientes (opcional, pode começar vazia)
 let pacientes = [ 
-    { id: 0, nome: "João Silva", email: "joao@gmail.com", idade: 32, telefone: "99999-9999" },
-    { id: 1, nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
-    { id: 2, nome: "Mario Santos", email: "mario@gmail.com", idade: 48, telefone: "98888-8866" }
+    { id: uuidv4(), nome: "João Silva", email: "joao@gmail.com", idade: 32, telefone: "99999-9999" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Mario Santos", email: "mario@gmail.com", idade: 48, telefone: "98888-8866" }
 ];
 
 // Endpoint para obter pacientes
@@ -37,11 +38,12 @@ app.post(
   return res.status(400).json({ errors: errors.array() });
   }
   const { nome, email, idade, telefone } = req.body;
-  const novoPaciente = { nome, email, idade, telefone };
+  const novoPaciente = { id: uuidv4(), nome, email, idade, telefone };
+  console.log("Novo paciente cadastrado:", novoPaciente);
   pacientes.push(novoPaciente);
-  res.status(201).json(novoPaciente);
+  res.status(201).json(novoPaciente);  
   }
-  );
+  ); 
   
 
 
