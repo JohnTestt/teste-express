@@ -17,7 +17,7 @@ export const TableCard = ({ id, nome, email, idade, telefone, onRemove }) => {
     setOpenModal(false)
   };
 
-  const handleRemoveUser = (id) => {
+  const handleRemoveUser = () => {
     onRemove(id)
     handleCloseModal();
     

@@ -44,6 +44,23 @@ app.post(
   res.status(201).json(novoPaciente);  
   }
   ); 
+
+  // Endpoint para deletar um paciente pelo ID
+app.delete("/pacientes/:id", (req, res) => {
+  const { id } = req.params;
+
+  // Filtra os pacientes para remover o paciente com o ID correspondente
+  const pacienteIndex = pacientes.findIndex(paciente => paciente.id === id);
+
+  if (pacienteIndex === -1) {
+      return res.status(404).json({ message: "Paciente não encontrado" });
+  }
+
+  pacientes.splice(pacienteIndex, 1);
+  res.status(200).json({ message: "Paciente removido com sucesso!" });
+});
+
+
   
 
 

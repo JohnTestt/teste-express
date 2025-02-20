@@ -98,7 +98,7 @@ export const User = () => {
                         email={data.email}
                         idade={data.idade}
                         telefone={data.telefone}
-                        onRemove = {()=> handleRemoveUser()}
+                        onRemove = {()=> handleRemoveUser(data.id)}
                       />
                     ))}
                   </tbody>
