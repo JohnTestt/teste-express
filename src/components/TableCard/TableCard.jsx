@@ -17,8 +17,10 @@ export const TableCard = ({ id, nome, email, idade, telefone, onRemove }) => {
     setOpenModal(false)
   };
 
-  const handleRemoveUser = () => {
-    onRemove()
+  const handleRemoveUser = (id) => {
+    onRemove(id)
+    handleCloseModal();
+    
 
   }
 
@@ -46,7 +48,7 @@ export const TableCard = ({ id, nome, email, idade, telefone, onRemove }) => {
         subtitle={'Ao confirmar, você irá apagar definitivamente o paciente'}
         open={openModal}
         close={() => handleCloseModal()}
-        onConfirm={()=> handleRemoveUser()}  />
+        onConfirm={()=> handleRemoveUser(id)}  />
       }
     </>
 

@@ -24,7 +24,7 @@ export const User = () => {
             try{
                 const response = await axios.get(`${API_URL}/pacientes`);
                 setUser(response.data)
-                console.log(response.data)
+               
             }
             catch(error) {
                 console.error('Error ao buscar dados', error); 
@@ -47,9 +47,19 @@ export const User = () => {
 
     //remove
 
-    const handleRemoveUser = () => {
-      axios.delete(`${API_URL}/pacientes`)
+    const handleRemoveUser = (id) => {
+      axios.delete(`${API_URL}/pacientes/${id}`)
 
+      .then(() => {
+        const filtered = user.filter(users => users.id !== id);
+       
+        setUser(filtered);
+      })
+
+      .catch((error) => {
+        console.error("Erro ao deletar paciente:", error);
+      })
+      
     };
 
     return (
