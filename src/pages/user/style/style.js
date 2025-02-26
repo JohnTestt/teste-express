@@ -24,8 +24,3 @@ export const TableHeader = styled.th`
   font-size: clamp(0.9rem, 2vw, 1rem);
 `;
 
-export const ErrorMessage = styled.p`
-  color: red;
-  font-size: 1.2rem;
-  text-align: center; 
-`;

@@ -8,6 +8,7 @@ export const BoxError = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 2rem;
    
 `
 export const ItensError = styled.section`
@@ -16,9 +17,8 @@ export const ItensError = styled.section`
 
 
  h1{
-    font-size: 4rem;
-    padding-bottom: 1rem;
-  
+    font-size: 2.2rem;
+    
  }
 
 `

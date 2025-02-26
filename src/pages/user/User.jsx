@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import { TableCard } from "../../components/TableCard/TableCard";
 import { useNavigate } from "react-router-dom";
 import { Search } from "../../components/Search/Search";
+import { Error } from "../../components/Error/Error";
 
 
-import { StyledTable, TableHeader, ErrorMessage } from "./style/style";
+import { StyledTable, TableHeader} from "./style/style";
 
 export const User = () => {
 
@@ -23,6 +24,7 @@ export const User = () => {
           
             try{
                 const response = await axios.get(`${API_URL}/pacientes`);
+            //   const response = await axios.get('http://localhost:5000/pacientes');
                 setUser(response.data)
                
             }
@@ -62,6 +64,13 @@ export const User = () => {
       
     };
 
+    //editar
+
+    const handleEditUser = (id) => {
+     
+      navigate(`/edit/${id}`);
+    }
+
     return (
         <>
          <p>Pacientes Cadastrados</p>
@@ -99,12 +108,17 @@ export const User = () => {
                         idade={data.idade}
                         telefone={data.telefone}
                         onRemove = {()=> handleRemoveUser(data.id)}
+                        onEdit = {()=> handleEditUser(data.id)} // data.id
                       />
                     ))}
                   </tbody>
                 </StyledTable>
               ) : (
-                <ErrorMessage>Error ao buscar Dados...</ErrorMessage>
+                <Error
+                title = {' Houve um error :('}
+                subtitle = {'Pacientes não encontrados...'}
+                />
+                 
               )}
               
         

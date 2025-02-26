@@ -13,7 +13,17 @@ app.use(cors());
 let pacientes = [ 
     { id: uuidv4(), nome: "João Silva", email: "joao@gmail.com", idade: 32, telefone: "99999-9999" },
     { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
-    { id: uuidv4(), nome: "Mario Santos", email: "mario@gmail.com", idade: 48, telefone: "98888-8866" }
+    { id: uuidv4(), nome: "Mario Santos", email: "mario@gmail.com", idade: 48, telefone: "98888-8866" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
+    { id: uuidv4(), nome: "Maria Santos", email: "maria@gmail.com", idade: 28, telefone: "98888-8888" },
 ];
 
 // Endpoint para obter pacientes
@@ -59,6 +69,35 @@ app.delete("/pacientes/:id", (req, res) => {
   pacientes.splice(pacienteIndex, 1);
   res.status(200).json({ message: "Paciente removido com sucesso!" });
 });
+
+
+// Endpoint para editar um paciente pelo ID
+app.put("/pacientes/:id", [
+  check("nome").notEmpty().withMessage("Nome é obrigatório"),
+  check("email").isEmail().withMessage("Email inválido"),
+  check("idade").isInt({ min: 0 }).withMessage("Idade deve ser um número válido"),
+  check("telefone").notEmpty().withMessage("Telefone é obrigatório"),
+], (req, res) => {
+  const { id } = req.params;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });  
+  }
+
+  const { nome, email, idade, telefone } = req.body;
+  const pacienteIndex = pacientes.findIndex(paciente => paciente.id === id);
+
+  if (pacienteIndex === -1) {
+    return res.status(404).json({ message: "Paciente não encontrado" });
+  }
+
+  // Atualiza os dados do paciente
+  pacientes[pacienteIndex] = { ...pacientes[pacienteIndex], nome, email, idade, telefone };
+
+  res.status(200).json({ message: "Paciente atualizado com sucesso!", paciente: pacientes[pacienteIndex] });
+});
+
+
 
 
   
