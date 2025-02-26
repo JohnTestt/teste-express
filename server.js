@@ -32,6 +32,18 @@ app.get("/pacientes", (req, res) => {
   res.json(pacientes);
 });
 
+// Endpoint para obter um paciente pelo ID
+app.get("/pacientes/:id", (req, res) => {
+  const { id } = req.params;
+  const paciente = pacientes.find(paciente => paciente.id === id);
+
+  if (!paciente) {
+    return res.status(404).json({ message: "Paciente não encontrado" });
+  }
+
+  res.json(paciente);
+});
+
 //Endpoint para adicionar um paciente com biblioteca validador (express-validator)
 
 app.post(
